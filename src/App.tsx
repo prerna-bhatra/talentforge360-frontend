@@ -1,25 +1,24 @@
+// src/App.tsx
 import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import './App.css'; // Import your Tailwind CSS styles
+import AddCandidateForm from './components/AddCandidateForm';
+import CandidateList from './components/CandidateList';
+import NavBar from './components/NavBar';
+
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Router>
+      <div>
+        <NavBar />
+        <Routes>
+          <Route path="/add" element={<AddCandidateForm />} />
+          <Route path="/candidates" element={<CandidateList />} />
+          {/* <Route path="/" element={<h1>Home</h1>} /> */}
+        </Routes>
+      </div>
+    </Router>
   );
 }
 
