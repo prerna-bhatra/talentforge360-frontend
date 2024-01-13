@@ -1,4 +1,6 @@
 import React, { useEffect, useState } from 'react';
+import { toast, ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 
 import axios from 'axios';
@@ -46,14 +48,32 @@ const CandidateList: React.FC = () => {
 
 
 
-  const handleSelectChange = (e: any) => {
+  const handleSelectChange = async (e: any, i: number) => {
 
     console.log("target", e.target.value);
+    try {
+      const response = await axios.post(`http://localhost:3005/candidates/status/${i}`, {
+        status: e.target.value
+      });
+      // console.log({ response });
+      toast.success("Candidate status updated succefully!", {
+        position: toast.POSITION.TOP_RIGHT,
+      });
+
+      // setSelectedStatus(candidates.status)
+
+    } catch (error) {
+      toast.error("Something went wrong!", {
+        position: toast.POSITION.TOP_RIGHT,
+      });
+    }
 
   }
 
   return (
     <div>
+            <ToastContainer />
+
       <h2 className='mt-4 mb-4 ml-4'>Candidate List</h2>
       {
         candidates.length > 0 ? (<table className="min-w-full divide-y divide-gray-200">
@@ -93,8 +113,7 @@ const CandidateList: React.FC = () => {
                 <td className="px-6 py-4 whitespace-nowrap">{candidate.nodeJsExperience}</td>
                 <td className="px-6 py-4 whitespace-nowrap">{candidate.totalScore}</td>
                 <td className="px-6 py-4 whitespace-nowrap">
-                  {/* {candidate.status} */}
-                  <select id="options" onChange={handleSelectChange}>
+                  <select id="options" onChange={(e) => handleSelectChange(e, candidate.id)}>
                     <option value={candidate.status ? candidate.status : selectedStatus}>
                       {candidate.status ? candidate.status : "Select..."}
                     </option>
@@ -106,7 +125,6 @@ const CandidateList: React.FC = () => {
                     }
                   </select>
                 </td>
-                {/* Add other table data */}
               </tr>
             ))}
           </tbody>
