@@ -85,6 +85,9 @@ export default function AddCandidateForm() {
       } catch (error) {
 
         console.log({ error });
+        toast.error("Something went wrong!", {
+          position: toast.POSITION.TOP_RIGHT,
+        });
 
       }
 

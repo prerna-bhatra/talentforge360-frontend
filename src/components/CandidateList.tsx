@@ -17,7 +17,13 @@ interface Candidate {
 }
 
 const CandidateList: React.FC = () => {
+
+  const statues = ["Contacted", "Interview Scheduled", "Offer Extended", "Hired", "Rejected"]
+
   const [candidates, setCandidates] = useState<Candidate[]>([]);
+
+  const [selectedStatus, setSelectedStatus] = useState('');
+
 
   useEffect(() => {
     // Fetch candidates from API
@@ -25,6 +31,8 @@ const CandidateList: React.FC = () => {
       try {
         const response = await axios.get('http://localhost:3005/candidates');
         setCandidates(response.data);
+        // setSelectedStatus(candidates.status)
+
       } catch (error) {
         console.error('Error fetching candidates:', error);
       }
@@ -33,36 +41,84 @@ const CandidateList: React.FC = () => {
     fetchCandidates();
   }, []);
 
+
+  console.log({ candidates });
+
+
+
+  const handleSelectChange = (e: any) => {
+
+    console.log("target", e.target.value);
+
+  }
+
   return (
     <div>
       <h2 className='mt-4 mb-4 ml-4'>Candidate List</h2>
-      <table className="min-w-full divide-y divide-gray-200">
-        <thead className="bg-gray-50">
-          <tr>
-            <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-              Name
-            </th>
-            <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-              Email
-            </th>
-            <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-              Phone
-            </th>
-            {/* Add other table headers */}
-          </tr>
-        </thead>
-        <tbody className="bg-white divide-y divide-gray-200">
-          {candidates.map((candidate) => (
-            <tr key={candidate.id}>
-              <td className="px-6 py-4 whitespace-nowrap">{candidate.name}</td>
-              <td className="px-6 py-4 whitespace-nowrap">{candidate.email}</td>
-              <td className="px-6 py-4 whitespace-nowrap">{candidate.phone}</td>
-              {/* Add other table data */}
+      {
+        candidates.length > 0 ? (<table className="min-w-full divide-y divide-gray-200">
+          <thead className="bg-gray-50">
+            <tr>
+              <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                Name
+              </th>
+              <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                Email
+              </th>
+              <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                Phone
+              </th>
+              <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                React JS Experience
+              </th>
+              <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                Node JS Experience
+              </th>
+              <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                Total Score
+              </th>
+              <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                Status
+              </th>
+              {/* Add other table headers */}
             </tr>
-          ))}
-        </tbody>
-      </table>
-    </div>
+          </thead>
+          <tbody className="bg-white divide-y divide-gray-200">
+            {candidates.map((candidate) => (
+              <tr key={candidate.id}>
+                <td className="px-6 py-4 whitespace-nowrap">{candidate.name}</td>
+                <td className="px-6 py-4 whitespace-nowrap">{candidate.email}</td>
+                <td className="px-6 py-4 whitespace-nowrap">{candidate.phone}</td>
+                <td className="px-6 py-4 whitespace-nowrap">{candidate.reactJsExperience}</td>
+                <td className="px-6 py-4 whitespace-nowrap">{candidate.nodeJsExperience}</td>
+                <td className="px-6 py-4 whitespace-nowrap">{candidate.totalScore}</td>
+                <td className="px-6 py-4 whitespace-nowrap">
+                  {/* {candidate.status} */}
+                  <select id="options" onChange={handleSelectChange}>
+                    <option value={candidate.status ? candidate.status : selectedStatus}>
+                      {candidate.status ? candidate.status : "Select..."}
+                    </option>
+                    {
+                      statues.map((element) =>
+                      (
+                        <option value={element}>{element}</option>
+                      ))
+                    }
+                  </select>
+                </td>
+                {/* Add other table data */}
+              </tr>
+            ))}
+          </tbody>
+        </table>
+
+        ) :
+          (
+            <div>Loading</div>
+          )
+      }
+
+    </div >
   );
 };
 
