@@ -95,6 +95,9 @@ const CandidateList: React.FC = () => {
                 Node JS Experience
               </th>
               <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                Skills
+              </th>
+              <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                 Total Score
               </th>
               <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
@@ -111,6 +114,7 @@ const CandidateList: React.FC = () => {
                 <td className="px-6 py-4 whitespace-nowrap">{candidate.phone}</td>
                 <td className="px-6 py-4 whitespace-nowrap">{candidate.reactJsExperience}</td>
                 <td className="px-6 py-4 whitespace-nowrap">{candidate.nodeJsExperience}</td>
+                <td className="px-6 py-4 whitespace-nowrap w-20px">{candidate.skills}</td>
                 <td className="px-6 py-4 whitespace-nowrap">{candidate.totalScore}</td>
                 <td className="px-6 py-4 whitespace-nowrap">
                   <select id="options" onChange={(e) => handleSelectChange(e, candidate.id)}>

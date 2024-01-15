@@ -26,18 +26,6 @@ const resolver: Resolver<FormValues> = async (values) => {
 
       }
       : {},
-    phone: !values.phone
-      ? {
-        type: "required",
-        message: "Phone is required.",
-      }
-      : {},
-    email: !values.email
-      ? {
-        type: "required",
-        message: "Email is required.",
-      }
-      : {},
   };
 };
 
@@ -45,13 +33,12 @@ export default function AddCandidateForm() {
   const {
     register,
     handleSubmit,
+    reset,
     formState: { errors },
   } = useForm<FormValues>({ resolver });
 
   const onSubmit = handleSubmit(
     async (data) => {
-      console.log("SUBMIT", data)
-
 
       const {
         name,
@@ -76,7 +63,9 @@ export default function AddCandidateForm() {
           reactJsExperience: parseInt(reactJsExperience),
         });
 
-        console.log({ response });
+        // console.log({ response });
+        reset();
+
         toast.success("Candidate added succefully!", {
           position: toast.POSITION.TOP_RIGHT,
         });
