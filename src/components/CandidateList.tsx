@@ -31,7 +31,7 @@ const CandidateList: React.FC = () => {
     // Fetch candidates from API
     const fetchCandidates = async () => {
       try {
-        const response = await axios.get('http://localhost:3005/candidates');
+        const response = await axios.get('https://talentforge360-production.up.railway.app/candidates');
         setCandidates(response.data);
         // setSelectedStatus(candidates.status)
 
@@ -52,7 +52,7 @@ const CandidateList: React.FC = () => {
 
     console.log("target", e.target.value);
     try {
-      const response = await axios.post(`http://localhost:3005/candidates/status/${i}`, {
+      const response = await axios.post(`https://talentforge360-production.up.railway.app/candidates/status/${i}`, {
         status: e.target.value
       });
       // console.log({ response });

@@ -66,7 +66,7 @@ export default function AddCandidateForm() {
 
       try {
 
-        const response = await axios.post('http://localhost:3005/candidates', {
+        const response = await axios.post('https://talentforge360-production.up.railway.app/candidates', {
           name,
           email,
           phone,
